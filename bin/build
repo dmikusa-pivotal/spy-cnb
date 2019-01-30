@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
+echo "<<<<< Test Buildpack Build Script Running >>>>>>"
+echo "Script location: $0"
+echo "Running environment:"
+env
+echo ""
+echo "Merged Build Plan:"
+cat -
+echo ""
+echo "Layers: $1"
+ls -lRa "$1"
+echo "Platform: $2"
+echo "Plan: $3"
+echo ""
+cat "$3"
+echo ""
+echo "Working Directory: $PWD"
+echo "Platform Folder:"
+ls -lRa "$2"
+#echo "App:"
+#ls -lRa .
+
+echo "Writing 'launch.toml'"
+cat << EOF > launch.toml
+processes = [{ type = "web", command = "./run.sh"}]
+EOF
+
+echo "Done"
+
+exit 0
